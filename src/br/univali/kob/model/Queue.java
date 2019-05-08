@@ -50,10 +50,10 @@ public class Queue<T> {
     }
 
     /**
-     * Get the row total.
+     * Get the queue total.
      * @return int with the total of elements on the row.
      */
-    public int rowTotal() {
+    public int queueTotal() {
         return this.cardinality;
     }
 
@@ -62,7 +62,7 @@ public class Queue<T> {
      * @param obj: Object reference that will be search on the list.
      * @return boolean true is the element is on the list and false if not.
      */
-    public boolean isOnRow(Object obj) {
+    public boolean isOnQueue(Object obj) {
         for (int i = 0; i < this.cardinality; i++) {
             if (this.elements[i].equals(obj)) {
                 return true;
@@ -86,11 +86,17 @@ public class Queue<T> {
      * @return Object reference for the element on the given index.
      */
     public Object getElement(int index) {
-        if (isValidPosition(index)) {
-            return this.elements[index];
-        } else {
-            return null;
+        if (!isValidPosition(index)) { return null; }
+
+        int loop = 0;
+        for (int i = (this.first + 1); loop < this.cardinality; i++) {
+            if (i == index) {
+                return this.elements[i];
+            }
+            if (i == this.cardinality) { i = 0; }
+            loop++;
         }
+        return null;
     }
 
     /**
@@ -99,11 +105,13 @@ public class Queue<T> {
      * @return int with the index of the element on the row (return -1 if the element is not on the row).
      */
     public int getElementRowPosition(Object obj) {
-        for (int i = (this.first + 1); i == this.first; i++) {
+        int index = 0;
+        for (int i = (this.first + 1); index < this.cardinality; i++) {
             if (this.elements[i].equals(obj)) {
-                return i;
+                return index + 1;
             }
             if (i == this.cardinality) { i = 0; }
+            index++;
         }
         return -1;
     }
@@ -126,25 +134,24 @@ public class Queue<T> {
      * Insert a element on the row.
      * @param obj: Object that will be inserted on the row.
      */
-    public void insert(Object obj) {
+    public void insert(Object obj) throws ArrayIndexOutOfBoundsException {
         if (this.cardinality != this.size) {
             if ((this.last + 1) == this.size) {
                 this.last = 0;
-                System.out.println("hmmmmmm");
             } else {
                 this.last++;
             }
             this.elements[this.last] = obj;
             this.cardinality++;
         } else {
-            System.out.println("OVERFLOW");
+            throw new ArrayIndexOutOfBoundsException("Overflow!");
         }
     }
 
     /**
      * Remove a element on the row.
      */
-    public void remove() {
+    public void remove() throws IllegalArgumentException {
         if (this.cardinality != 0) {
             if ((this.first + 1) == this.size) {
                 this.first = 0;
@@ -154,7 +161,7 @@ public class Queue<T> {
             // obj = this.elements[this.first];
             this.cardinality--;
         } else {
-            System.out.println("UNDERFLOW");
+            throw new IllegalArgumentException("Underflow!");
         }
     }
 
@@ -163,10 +170,13 @@ public class Queue<T> {
      */
     public void print() {
         System.out.print("{ ");
-        for (int i = (this.first + 1); i < this.size;) {
+        int index = 0;
+        for (int i = (this.first + 1); index < this.cardinality;) {
             System.out.print(this.elements[i]);
             i++;
-            if (i < this.size) { System.out.print(" --> "); }
+            if (i < this.size && index < this.cardinality) { System.out.print(" --> "); }
+            if (i == this.size) { i = 0; }
+            index++;
         }
         System.out.print(" }");
         System.out.println();

@@ -35,12 +35,12 @@ public class QueueTestCase {
         System.out.println();
         System.out.println();
 
-        // rowTotal() test case
+        // queueTotal() test case
         testCase.queueTotalTestCase();
         System.out.println();
         System.out.println();
 
-        // isOnRow() test case
+        // isOnQueue() test case
         testCase.isOnQueueTestCase(8);
         System.out.println();
         System.out.println();
@@ -97,6 +97,11 @@ public class QueueTestCase {
         System.out.println();
         System.out.println();
 
+        // getElementRowPosition() test case
+        testCase.getElementQueuePositionTestCase(5);
+        System.out.println();
+        System.out.println();
+
         System.out.println("########## QUEUE CLASS TESTS CASE ##########");
 
     }
@@ -126,7 +131,7 @@ public class QueueTestCase {
 
     public void queueTotalTestCase() {
         System.out.println("========== ROW TOTAL TEST CASE ==========");
-        System.out.println("Queue total is =  " + this.queue.rowTotal());
+        System.out.println("Queue total is =  " + this.queue.queueTotal());
         System.out.print("Queue = ");
         this.queue.print();
         System.out.println("========== ROW TOTAL TEST CASE ==========");
@@ -135,7 +140,7 @@ public class QueueTestCase {
     public void isOnQueueTestCase(Object obj) {
         System.out.println("========== IS ON QUEUE TEST CASE ==========");
         System.out.println(obj.toString());
-        System.out.println("Object is on the queue? " + this.queue.isOnRow(obj));
+        System.out.println("Object is on the queue? " + this.queue.isOnQueue(obj));
         System.out.print("Queue = ");
         this.queue.print();
         System.out.println("========== IS ON QUEUE TEST CASE ==========");
@@ -164,7 +169,7 @@ public class QueueTestCase {
     }
 
     public void getElementQueuePositionTestCase(Object obj) {
-        System.out.println("========== GET ELEMENT ROW POSITION TEST CASE ==========");
+        System.out.println("========== GET ELEMENT QUEUE POSITION TEST CASE ==========");
         int result = this.queue.getElementRowPosition(obj);
         if (result >= 0) {
             System.out.println("The object position on the queue is = " + result);
